@@ -7,10 +7,24 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      // Keep track of all the videos in the video list and the current video in the player
-      videos: exampleVideoData,
-      currVideoIdx: 0,
+      videos: [],
+      currVideoIdx: -1,
     };
+  }
+
+  componentDidMount() {
+    const options = {
+      key: this.props.YOUTUBE_API_KEY,
+      query: '',
+      max: 5,
+    };
+
+    this.props.searchYouTube(options, (videos) =>
+      this.setState({
+        videos: videos,
+        currVideoIdx: 0,
+      })
+    );
   }
 
   onClick(index) {
