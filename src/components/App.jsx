@@ -1,6 +1,6 @@
 import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
-import exampleVideoData from '../data/exampleVideoData.js';
+import Search from './Search.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,9 +13,20 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    // default query
+    this.search('Ray Chen');
+  }
+
+  onClick(index) {
+    this.setState({
+      currVideoIdx: index,
+    });
+  }
+
+  search(query) {
     const options = {
       key: this.props.YOUTUBE_API_KEY,
-      query: '',
+      query: query,
       max: 5,
     };
 
@@ -27,18 +38,12 @@ class App extends React.Component {
     );
   }
 
-  onClick(index) {
-    this.setState({
-      currVideoIdx: index,
-    });
-  }
-
   render() {
     return (
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em>search</em> view goes here</h5></div>
+            <Search handleSearchInputChange={ this.search.bind(this) } />
           </div>
         </nav>
         <div className="row">
@@ -46,7 +51,9 @@ class App extends React.Component {
             <VideoPlayer video={this.state.videos[this.state.currVideoIdx]} />
           </div>
           <div className="col-md-5">
-            <VideoList videos={this.state.videos} onClick={(index) => { this.onClick(index); }}/>
+            <VideoList
+              videos={this.state.videos}
+              onClick={(index) => { this.onClick(index); }} />
           </div>
         </div>
       </div >
