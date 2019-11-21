@@ -3,8 +3,10 @@ import VideoListEntry from './VideoListEntry.js';
 var VideoList = (props) => (
   <div className="video-list">
     {/* from exampleVideoData, we can see the structure of each video */
-      props.videos.map((video) =>
-        <VideoListEntry video={video} key={video.etag} />)}
+      // JS Array.prototype.map() parameters: currentValue, index(optional)
+      // call parent component App's onClick method through props and pass idx to App
+      props.videos.map((video, idx) =>
+        <VideoListEntry video={video} onClick={() => { props.onClick(idx); }} />)}
   </div>
 );
 

@@ -2,27 +2,21 @@ import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
 import exampleVideoData from '../data/exampleVideoData.js';
 
-// var App = () => (
-//   <div>
-//     <nav className="navbar">
-//       <div className="col-md-6 offset-md-3">
-//         <div><h5><em>search</em> view goes here</h5></div>
-//       </div>
-//     </nav>
-//     <div className="row">
-//       <div className="col-md-7">
-//         <VideoPlayer video={exampleVideoData[0]} />
-//       </div>
-//       <div className="col-md-5">
-//         <VideoList videos={exampleVideoData} />
-//       </div>
-//     </div>
-//   </div>
-// );
-
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      // Keep track of all the videos in the video list and the current video in the player
+      videos: exampleVideoData,
+      currVideoIdx: 0,
+    };
+  }
+
+  onClick(index) {
+    this.setState({
+      currVideoIdx: index,
+    });
   }
 
   render() {
@@ -35,10 +29,10 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <VideoPlayer video={exampleVideoData[0]} />
+            <VideoPlayer video={this.state.videos[this.state.currVideoIdx]} />
           </div>
           <div className="col-md-5">
-            <VideoList videos={exampleVideoData} />
+            <VideoList videos={this.state.videos} onClick={(index) => { this.onClick(index); }}/>
           </div>
         </div>
       </div >
